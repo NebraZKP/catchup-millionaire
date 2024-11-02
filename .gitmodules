@@ -4,3 +4,6 @@
 [submodule "MillionaireErc20/lib/openzeppelin-contracts"]
 	path = MillionaireErc20/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "MillionaireErc20/lib/upa.git"]
+	path = MillionaireErc20/lib/upa.git
+	url = https://github.com/NebraZKP/upa.git
