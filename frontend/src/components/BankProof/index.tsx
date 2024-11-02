@@ -2,7 +2,11 @@ import { useState } from 'react';
 import QRCode from 'react-qr-code';
 import { ReclaimProofRequest } from '@reclaimprotocol/js-sdk';
  
-function BankProof() {
+interface Props {
+  onProof?: (proofs: any) => void;
+}
+
+function BankProof({ onProof }: Props) {
 
   // State to store the verification request URL
   const [requestUrl, setRequestUrl] = useState('');
@@ -35,6 +39,7 @@ function BankProof() {
 
         console.log('Verification success', proofs);
         setProofs(proofs ? [proofs] : []);
+        onProof?.(proofs);
 
         // Add your success logic here, such as:
         // - Updating UI to show verification success
@@ -56,22 +61,17 @@ function BankProof() {
  
   return (
     <>
-      <button onClick={getVerificationReq}>Get Verification Request</button>
-
-      {/* Display QR code when URL is available */}
-
+      <button onClick={getVerificationReq}>Boost with Bank Balance</button>
       {requestUrl && (
         <div style={{ margin: '20px 0' }}>
-          <QRCode value={requestUrl} />
+          {/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? (
+            <a href={requestUrl} target="_blank" rel="noopener noreferrer">Tap to prove bank balance</a>
+          ) : (
+            <a href={requestUrl} target="_blank" rel="noopener noreferrer"><QRCode value={requestUrl} /></a>
+          )}
         </div>
       )}
 
-      {proofs && (
-        <div>
-          <h2>Verification Successful!</h2>
-          <pre>{JSON.stringify(proofs, null, 2)}</pre>
-        </div>
-      )}
     </>
   );
 }

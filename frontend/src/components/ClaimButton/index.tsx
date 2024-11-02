@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
 
 interface Coin {
   id: number
@@ -10,11 +9,17 @@ interface Coin {
   delay: number
 }
 
-export default function Component() {
+interface Props {
+  onPress?: () => void
+}
+
+export default function ClaimButton({ onPress }: Props) {
   const [coins, setCoins] = useState<Coin[]>([])
   const [totalCoins, setTotalCoins] = useState(0)
 
   const handleDrop = () => {
+    onPress?.()
+
     const newCoins = Array.from({ length: 10 }, (_, i) => ({
       id: totalCoins + i,
       x: Math.random() * 100 - 50, // Random x position between -50 and 50
@@ -30,15 +35,12 @@ export default function Component() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-blue-200">
+    <div className="">
       <div className="mb-8 space-y-4 text-center">
-        <Button
-          onClick={handleDrop}
-          className="px-6 py-3 text-lg font-semibold"
-        >
-          Drop Coins
-        </Button>
-        <p className="text-xl font-bold">Total Coins: {totalCoins}</p>
+        <button
+          onClick={handleDrop}>
+          Claim more Coins
+        </button>
       </div>
       
       <div className="relative w-64 h-96 border-4 border-gray-700 rounded-lg bg-opacity-50 bg-gray-200 overflow-hidden">
@@ -79,3 +81,5 @@ export default function Component() {
     </div>
   )
 }
+
+export { ClaimButton };
