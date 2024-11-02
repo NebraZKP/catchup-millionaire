@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@nebrazkp/upa/contracts/IUpaVerifier.sol";
 
 contract MillionaireERC20 is ERC20, Ownable {
     // Constructor to initialize the token with a name and symbol
@@ -11,6 +12,14 @@ contract MillionaireERC20 is ERC20, Ownable {
     // Function to mint tokens to an address
     function mint(address to, uint256 amount) external onlyOwner {
         _mint(to, amount);
+    }
+
+    function sendSalaryTokens(address recipient, uint256 salary) external onlyOwner {
+        bool isProofVerified = upaVerifier.isProofVerified(circuitId, salary);
+
+        require(isProofVerified, "Solution not verified by UPA");
+
+        _mint(recipient, salary);
     }
 
     // Function to send tokens while ensuring the user's total balance equals the input
