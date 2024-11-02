@@ -1,3 +1,6 @@
 [submodule "MillionaireErc20/lib/forge-std"]
 	path = MillionaireErc20/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "MillionaireErc20/lib/openzeppelin-contracts"]
+	path = MillionaireErc20/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
